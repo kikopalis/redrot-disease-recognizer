@@ -1,0 +1,7 @@
+{
+  "name": "redrot-disease-recognizer",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
