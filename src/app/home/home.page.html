@@ -1,22 +1,39 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Home
     </ion-title>
   </ion-toolbar>
 </ion-header>
+  
+<ion-content>
+  <div class="main-container">
+  <img #imagePreview alt="" [src]="imgURL || '/assets/images/placeholder.jpg'" class="selected-image" width="100" height="100">
+  <br/>
+  <br/>
+  <div id="filename" *ngIf="file">{{ file.name }} </div>
+  <input type="file" (change)="setFile($event)" accept="image/*">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <image-cropper
+      #imageCropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="1"
+      [resizeToWidth]="cropSize.width"
+      [resizeToHeight]="cropSize.height"
+      format="png"
+      (imageCropped)="cropImage($event)"
+    ></image-cropper>
+      
+  <ion-button round (click)="triggerInputFile()"> Select Image </ion-button>
+  <br/>
+  <ion-button (click)="captureImage()">Capture from Camera</ion-button>
 
-  <div id="container">
-    <strong>Ready to create and app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <p id="result">
+    <span *ngIf="result">Predicted Variety: {{ result }}</span>
+    <span *ngIf="result == null && file">Predicting...</span>
+  </p>
+</div>
 
-    <ion-button (click) = "takePicture()">camera</ion-button>
-  </div>
+  <canvas #canvas hidden></canvas>
 </ion-content>
